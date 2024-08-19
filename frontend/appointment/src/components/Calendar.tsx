@@ -34,24 +34,26 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
         fetchEvents();
     }, [fetchEvents]);
 
-    useEffect(() => {
-        const fetchHolidays = async () => {
-            try {
-                const url = `https://holidayapi.com/v1/holidays?country=NP&year=2023&key=7908bfe9-6fc9-474b-acf1-de5963aea45d`;
-                const response = await axios.get(url);
-                setHolidays(response.data.holidays || []);
-            } catch (error) {
-                console.error('Error fetching holidays:', error);
-            }
-        };
+    const fetchHolidays = async (year: number) => {
+        try {
+            const url = `https://holidayapi.com/v1/holidays?country=NP&year=${year}&key=7908bfe9-6fc9-474b-acf1-de5963aea45d`;
+            const response = await axios.get(url);
+            setHolidays(response.data.holidays || []);
+        } catch (error) {
+            console.error('Error fetching holidays:', error);
+        }
+    };
 
-        fetchHolidays();
+    useEffect(() => {
+        const currentYear = date.getFullYear();
+        fetchHolidays(currentYear);
     }, []);
 
-    const holidayDates = holidays.map(holiday => new Date(holiday.date));
     const handleYearChange = (year: number) => {
         const newDate = new Date(year, date.getMonth(), date.getDate());
         setDate(newDate);
+        setHolidays([]); // Clear holidays before fetching new ones
+        fetchHolidays(year); // Fetch holidays for the selected year
     };
     
     // Map backend event data to react-big-calendar format
