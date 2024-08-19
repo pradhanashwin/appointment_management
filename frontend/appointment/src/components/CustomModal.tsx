@@ -20,7 +20,7 @@ const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onRequestClose, title
                 
                 <div className="icons">
                 <FontAwesomeIcon className="fa-icons fa-xmark" icon={faXmark} onClick={onRequestClose}/>
-                    {onDelete && <FontAwesomeIcon className="fa-icons fa-trash" icon={faTrashCan} />}
+                    {onDelete && <FontAwesomeIcon className="fa-icons fa-trash" icon={faTrashCan} onClick={onDelete}/>}
                 </div>
             
             </Modal.Header>
