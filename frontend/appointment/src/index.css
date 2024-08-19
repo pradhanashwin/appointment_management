@@ -150,3 +150,21 @@
     background-color: #dc3545;
     color: #fff;
 }
+
+.icons{
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+}
+.fa-icons{
+    /* padding-left: 2px; */
+}
+
+.fa-xmark{
+    padding-left: 12px;
+    
+}
+
+.fa-trash{
+    /* padding-left: 2px; */
+}

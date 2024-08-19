@@ -48,7 +48,6 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
         fetchHolidays();
     }, []);
 
-
     const holidayDates = holidays.map(holiday => new Date(holiday.date));
     const handleYearChange = (year: number) => {
         const newDate = new Date(year, date.getMonth(), date.getDate());
@@ -62,22 +61,60 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
         start: new Date(event.start_datetime),
         end: new Date(event.end_datetime),
         description: event.description,
-        participants: '' // Adjust if participants are included in the backend
+        participants: event.participants || '' // Adjust if participants are included in the backend
     }));
 
     const onSelectEventHandler = (event: Event) => {
-        setModalTitle('Event Details');
+        setModalTitle('Edit Event');
+        setCurrentEvent(event);
         setModalContent(
-            <div>
-                <p><strong>Id:</strong> {event.id}</p>
-                <p><strong>Title:</strong> {event.title}</p>
-                <p><strong>Start:</strong> {moment(event.start).format('MMMM D, YYYY HH:mm')}</p>
-                <p><strong>End:</strong> {moment(event.end).format('MMMM D, YYYY HH:mm')}</p>
-                <p><strong>Description:</strong> {event.description}</p>
-                <p><strong>Participants:</strong> {event.participants}</p>
+            <div className="event-form">
+                <div className="mb-3">
+                    <Input 
+                        type="text" 
+                        onChange={(value) => setCurrentEvent(prev => ({ ...prev, title: value }))} 
+                        placeholder="Event Title" 
+                        defaultValue={event.title}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="event-start" className="form-label">Start Datetime</label>
+                    <Input 
+                        type="datetime-local" 
+                        onChange={(value) => setCurrentEvent(prev => ({ ...prev, start: value }))} 
+                        placeholder="Start Datetime" 
+                        defaultValue={moment(event.start).format('YYYY-MM-DDTHH:mm')} 
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="event-end" className="form-label">End Datetime</label>
+                    <Input 
+                        type="datetime-local" 
+                        onChange={(value) => setCurrentEvent(prev => ({ ...prev, end: value }))} 
+                        placeholder="End Datetime" 
+                        defaultValue={moment(event.end).format('YYYY-MM-DDTHH:mm')} 
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="event-description" className="form-label">Description</label>
+                    <Input 
+                        type="text" 
+                        onChange={(value) => setCurrentEvent(prev => ({ ...prev, description: value }))} 
+                        placeholder="Description" 
+                        defaultValue={event.description || ''} 
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="event-participants" className="form-label">Participants</label>
+                    <Input 
+                        type="text" 
+                        onChange={(value) => setCurrentEvent(prev => ({ ...prev, participants: value }))} 
+                        placeholder="Participants (comma-separated)" 
+                        defaultValue={event.participants || ''} 
+                    />
+                </div>
             </div>
         );
-        setCurrentEvent(event);
         setIsOpen(true); // Opens the modal
     };
 
@@ -93,51 +130,51 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
         setModalTitle('Create Event');
         setModalContent(
             <div className="event-form">
-            <div className="mb-3">
-                <Input 
-                    type="text" 
-                    onChange={(value) => setCurrentEvent(prev => ({ ...prev, title: value }))} 
-                    placeholder="Event Title" 
-                    defaultValue="" 
-                />
+                <div className="mb-3">
+                    <Input 
+                        type="text" 
+                        onChange={(value) => setCurrentEvent(prev => ({ ...prev, title: value }))} 
+                        placeholder="Event Title" 
+                        defaultValue="" 
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="event-start" className="form-label">Start Datetime</label>
+                    <Input 
+                        type="datetime-local" 
+                        onChange={(value) => setCurrentEvent(prev => ({ ...prev, start: value }))} 
+                        placeholder="Start Datetime" 
+                        defaultValue={moment(slotInfo.start).format('YYYY-MM-DDTHH:mm')} 
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="event-end" className="form-label">End Datetime</label>
+                    <Input 
+                        type="datetime-local" 
+                        onChange={(value) => setCurrentEvent(prev => ({ ...prev, end: value }))} 
+                        placeholder="End Datetime" 
+                        defaultValue={moment(slotInfo.end).format('YYYY-MM-DDTHH:mm')} 
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="event-description" className="form-label">Description</label>
+                    <Input 
+                        type="text" 
+                        onChange={(value) => setCurrentEvent(prev => ({ ...prev, description: value }))} 
+                        placeholder="Description" 
+                        defaultValue="" 
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="event-participants" className="form-label">Participants</label>
+                    <Input 
+                        type="text" 
+                        onChange={(value) => setCurrentEvent(prev => ({ ...prev, participants: value }))} 
+                        placeholder="Participants (comma-separated)" 
+                        defaultValue="" 
+                    />
+                </div>
             </div>
-            <div className="mb-3">
-                <label htmlFor="event-start" className="form-label">Start Datetime</label>
-                <Input 
-                    type="datetime-local" 
-                    onChange={(value) => setCurrentEvent(prev => ({ ...prev, start: value }))} 
-                    placeholder="Start Datetime" 
-                    defaultValue={moment(slotInfo.start).format('YYYY-MM-DDTHH:mm')} 
-                />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="event-end" className="form-label">End Datetime</label>
-                <Input 
-                    type="datetime-local" 
-                    onChange={(value) => setCurrentEvent(prev => ({ ...prev, end: value }))} 
-                    placeholder="End Datetime" 
-                    defaultValue={moment(slotInfo.end).format('YYYY-MM-DDTHH:mm')} 
-                />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="event-description" className="form-label">Description</label>
-                <Input 
-                    type="text" 
-                    onChange={(value) => setCurrentEvent(prev => ({ ...prev, description: value }))} 
-                    placeholder="Description" 
-                    defaultValue="" 
-                />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="event-participants" className="form-label">Participants</label>
-                <Input 
-                    type="text" 
-                    onChange={(value) => setCurrentEvent(prev => ({ ...prev, participants: value }))} 
-                    placeholder="Participants (comma-separated)" 
-                    defaultValue="" 
-                />
-            </div>
-        </div>
         );
         setIsOpen(true);
     };
@@ -183,7 +220,6 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
             }
         };
     };
-
 
     return (
         <div className="calendar-container">

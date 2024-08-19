@@ -1,6 +1,8 @@
 // src/components/CustomModal.tsx
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 interface CustomModalProps {
     isOpen: boolean;
@@ -14,12 +16,16 @@ interface CustomModalProps {
 const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onRequestClose, title, content, onSave, onDelete }) => {
     return (
         <Modal show={isOpen} onHide={onRequestClose} centered>
-            {/* <Modal.Header closeButton>
-                <Modal.Title>{title}</Modal.Title>
-            </Modal.Header> */}
+            <Modal.Header >
+                
+                <div className="icons">
+                <FontAwesomeIcon className="fa-icons fa-xmark" icon={faXmark} onClick={onRequestClose}/>
+                    {onDelete && <FontAwesomeIcon className="fa-icons fa-trash" icon={faTrashCan} />}
+                </div>
+            
+            </Modal.Header>
             <Modal.Body>{content}</Modal.Body>
             <Modal.Footer>
-                {onDelete && <Button variant="danger" onClick={onDelete}>Delete</Button>}
                 <Button variant="secondary" onClick={onRequestClose}>Close</Button>
                 <Button variant="primary" onClick={onSave}>Save</Button>
             </Modal.Footer>
