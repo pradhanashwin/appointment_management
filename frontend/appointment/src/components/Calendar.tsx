@@ -61,7 +61,7 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
         start: new Date(event.start_datetime),
         end: new Date(event.end_datetime),
         description: event.description,
-        participants: event.participants || '' // Adjust if participants are included in the backend
+        participants: event.participants
     }));
 
     const onSelectEventHandler = (event: Event) => {

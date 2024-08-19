@@ -39,7 +39,6 @@ export function fetchEvents() {
 export function createEvent(values: any) {
     return async (dispatch: Dispatch) => {
         try {
-            debugger
             const newEvent = await apiRequest(`${BASE_URL}/events/`, 'POST', values);
             dispatch({ type: CREATE_EVENT, payload: newEvent });
             dispatch(fetchEvents()); // Refresh events list
