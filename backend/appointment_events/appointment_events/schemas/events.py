@@ -5,6 +5,7 @@ from datetime import datetime
 class EventBase(BaseModel):
     title: str
     description: Optional[str] = None
+    participants: Optional[str] = None
     start_datetime: datetime
     end_datetime: datetime
 
@@ -20,8 +21,8 @@ class EventResponse(BaseModel):
     title: str
     start_datetime: str
     end_datetime: str
-    description: str
     participants: str
+    description: str
 
 class EventUpdate(EventBase):
     pass

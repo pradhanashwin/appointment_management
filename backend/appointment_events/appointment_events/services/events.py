@@ -24,24 +24,15 @@ async def get_events(db: Session, skip: int = 0, limit: int = 10) -> List[EventR
     # Convert events to EventResponse
     event_responses = []
     for event in events:
-        # Ensure participants is a list
-        # if event.participants is None:
-        #     participants = []
-        # elif isinstance(event.participants, str):
-        #     participants = event.participants.split(',')
-        # elif isinstance(event.participants, list):
-        #     participants = event.participants
-        # else:
-        #     participants = []  # Fallback to empty list
-
         event_responses.append(EventResponse(
             id=event.id,
             title=event.title,
             start_datetime=event.start_datetime.isoformat(),
             end_datetime=event.end_datetime.isoformat(),
             description=event.description,
-            participants=event.participants if event.participants else ''
+            participants=event.participants
         ))
+    print(event_responses)
     return event_responses
 
 async def get_event(db: Session, event_id: int) -> EventResponse:
