@@ -92,31 +92,44 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
         });
         setModalTitle('Create Event');
         setModalContent(
-            <div>
+            <div className="event-form">
+            <div className="mb-3">
                 <Input 
                     type="text" 
                     onChange={(value) => setCurrentEvent(prev => ({ ...prev, title: value }))} 
                     placeholder="Event Title" 
                     defaultValue="" 
                 />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="event-start" className="form-label">Start Datetime</label>
                 <Input 
                     type="datetime-local" 
                     onChange={(value) => setCurrentEvent(prev => ({ ...prev, start: value }))} 
                     placeholder="Start Datetime" 
                     defaultValue={moment(slotInfo.start).format('YYYY-MM-DDTHH:mm')} 
                 />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="event-end" className="form-label">End Datetime</label>
                 <Input 
                     type="datetime-local" 
                     onChange={(value) => setCurrentEvent(prev => ({ ...prev, end: value }))} 
                     placeholder="End Datetime" 
                     defaultValue={moment(slotInfo.end).format('YYYY-MM-DDTHH:mm')} 
                 />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="event-description" className="form-label">Description</label>
                 <Input 
                     type="text" 
                     onChange={(value) => setCurrentEvent(prev => ({ ...prev, description: value }))} 
                     placeholder="Description" 
                     defaultValue="" 
                 />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="event-participants" className="form-label">Participants</label>
                 <Input 
                     type="text" 
                     onChange={(value) => setCurrentEvent(prev => ({ ...prev, participants: value }))} 
@@ -124,10 +137,10 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
                     defaultValue="" 
                 />
             </div>
+        </div>
         );
         setIsOpen(true);
     };
-    
 
     const handleSave = () => {
         if (currentEvent) {

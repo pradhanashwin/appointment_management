@@ -14,9 +14,9 @@ interface CustomModalProps {
 const CustomModal: React.FC<CustomModalProps> = ({ isOpen, onRequestClose, title, content, onSave, onDelete }) => {
     return (
         <Modal show={isOpen} onHide={onRequestClose} centered>
-            <Modal.Header closeButton>
+            {/* <Modal.Header closeButton>
                 <Modal.Title>{title}</Modal.Title>
-            </Modal.Header>
+            </Modal.Header> */}
             <Modal.Body>{content}</Modal.Body>
             <Modal.Footer>
                 {onDelete && <Button variant="danger" onClick={onDelete}>Delete</Button>}
