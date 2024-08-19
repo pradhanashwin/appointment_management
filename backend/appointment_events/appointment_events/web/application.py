@@ -30,7 +30,7 @@ def get_app() -> FastAPI:
     
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:5173"],  # Allow only this origin
+        allow_origins=["*"],  # Allow only this origin
         allow_credentials=True,
         allow_methods=["*"],  # Allow all HTTP methods
         allow_headers=["*"],  # Allow all headers

@@ -81,7 +81,7 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
         setIsOpen(true); // Opens the modal
     };
 
-    const onSelectEventSlotHandler = (slotInfo: any) => {
+    const onSelectEventSlotHandler = (slotInfo) => {
         setCurrentEvent({
             id: null,
             title: '',
@@ -93,28 +93,56 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
         setModalTitle('Create Event');
         setModalContent(
             <div>
-                <input type="hidden" value={currentEvent?.id || ''} />
-                <Input onChange={(value) => setCurrentEvent((prev: any) => ({ ...prev, title: value }))} placeholder="Event Title" defaultValue="" />
-                <Input type="datetime" onChange={(value) => setCurrentEvent((prev: any) => ({ ...prev, start: new Date(value).toISOString() }))} placeholder="Start Datetime" defaultValue={moment(slotInfo.start).format('YYYY-MM-DDTHH:mm')} />
-                <Input type="datetime" onChange={(value) => setCurrentEvent((prev: any) => ({ ...prev, end: new Date(value).toISOString() }))} placeholder="End Datetime" defaultValue={moment(slotInfo.end).format('YYYY-MM-DDTHH:mm')} />
-                <Input onChange={(value) => setCurrentEvent((prev: any) => ({ ...prev, description: value }))} placeholder="Description" defaultValue="" />
-                <Input onChange={(value) => setCurrentEvent((prev: any) => ({ ...prev, participants: value}))} placeholder="Participants (comma-separated)" defaultValue="" />
+                <Input 
+                    type="text" 
+                    onChange={(value) => setCurrentEvent(prev => ({ ...prev, title: value }))} 
+                    placeholder="Event Title" 
+                    defaultValue="" 
+                />
+                <Input 
+                    type="datetime-local" 
+                    onChange={(value) => setCurrentEvent(prev => ({ ...prev, start: value }))} 
+                    placeholder="Start Datetime" 
+                    defaultValue={moment(slotInfo.start).format('YYYY-MM-DDTHH:mm')} 
+                />
+                <Input 
+                    type="datetime-local" 
+                    onChange={(value) => setCurrentEvent(prev => ({ ...prev, end: value }))} 
+                    placeholder="End Datetime" 
+                    defaultValue={moment(slotInfo.end).format('YYYY-MM-DDTHH:mm')} 
+                />
+                <Input 
+                    type="text" 
+                    onChange={(value) => setCurrentEvent(prev => ({ ...prev, description: value }))} 
+                    placeholder="Description" 
+                    defaultValue="" 
+                />
+                <Input 
+                    type="text" 
+                    onChange={(value) => setCurrentEvent(prev => ({ ...prev, participants: value }))} 
+                    placeholder="Participants (comma-separated)" 
+                    defaultValue="" 
+                />
             </div>
         );
-        setIsOpen(true); // Opens the modal
+        setIsOpen(true);
     };
+    
 
     const handleSave = () => {
-        const formattedEvent = {
-            ...currentEvent,
-            start_datetime: currentEvent.start,
-            end_datetime: currentEvent.end,
-        };
-        delete formattedEvent.start;
-        delete formattedEvent.end;
-
-        if (formattedEvent) {
-            debugger
+        if (currentEvent) {
+            // Convert Date objects to ISO strings
+            const formattedEvent = {
+                ...currentEvent,
+                start_datetime: new Date(currentEvent.start).toISOString(),
+                end_datetime: new Date(currentEvent.end).toISOString(),
+            };
+    
+            // Remove the old Date fields
+            delete formattedEvent.start;
+            delete formattedEvent.end;
+    
+            // Handle the event creation or update
             if (formattedEvent.id) {
                 updateEvent(formattedEvent);
             } else {
@@ -143,7 +171,6 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
         };
     };
 
-    console.log('Displaying events in calendar:', mappedEvents); // Ensure events are correctly formatted
 
     return (
         <div className="calendar-container">
@@ -179,7 +206,6 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
 };
 
 const mapStateToProps = (state: any) => {
-    console.log('Redux state events:', state.events); // Add this line to verify the Redux state
     return {
         events: state.events,
     };

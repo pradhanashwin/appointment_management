@@ -6,27 +6,37 @@ class Input extends Component {
         super(props);
 
         this.state = {
-            value: this.props.defaultValue
+            value: this.props.defaultValue || ''
         };
 
-        this.onChange = (e) => this.onInputChange(e);
+        this.onChange = this.onInputChange.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.value !== this.state.value) {
-            this.props.onChange(this.state.value);
+    componentDidUpdate(prevProps) {
+        // Call parent's onChange only when value actually changes
+        if (prevProps.defaultValue !== this.props.defaultValue) {
+            this.setState({ value: this.props.defaultValue || '' });
         }
     }
 
     onInputChange(e) {
-        let value = e.target.value;
-        this.setState({value: value});
+        const value = e.target.value;
+        this.setState({ value });
+        if (this.props.onChange) {
+            this.props.onChange(value);
+        }
     }
 
     render() {
         return (
-            <input type="text" placeholder={this.props.placeholder} className="mm-popup__input" value={this.state.value} onChange={this.onChange} />
-        )
+            <input 
+                type={this.props.type || 'text'} // Default to text if type not provided
+                placeholder={this.props.placeholder} 
+                className="mm-popup__input" 
+                value={this.state.value} 
+                onChange={this.onChange} 
+            />
+        );
     }
 }
 
