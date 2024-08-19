@@ -1,0 +1,55 @@
+services:
+  api: &main_app
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: appointment_events:${APPOINTMENT_EVENTS_VERSION:-latest}
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APPOINTMENT_EVENTS_HOST: 0.0.0.0
+      APPOINTMENT_EVENTS_DB_HOST: appointment_events-db
+      APPOINTMENT_EVENTS_DB_PORT: 5432
+      APPOINTMENT_EVENTS_DB_USER: appointment_events
+      APPOINTMENT_EVENTS_DB_PASS: appointment_events
+      APPOINTMENT_EVENTS_DB_BASE: appointment_events
+
+  db:
+    image: postgres:16.3-bullseye
+    hostname: appointment_events-db
+    environment:
+      POSTGRES_PASSWORD: "appointment_events"
+      POSTGRES_USER: "appointment_events"
+      POSTGRES_DB: "appointment_events"
+    volumes:
+      - appointment_events-db-data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: pg_isready -U appointment_events
+      interval: 2s
+      timeout: 3s
+      retries: 40
+
+  migrator:
+    image: appointment_events:${APPOINTMENT_EVENTS_VERSION:-latest}
+    restart: "no"
+    command: alembic upgrade head
+    environment:
+      APPOINTMENT_EVENTS_DB_HOST: appointment_events-db
+      APPOINTMENT_EVENTS_DB_PORT: 5432
+      APPOINTMENT_EVENTS_DB_USER: appointment_events
+      APPOINTMENT_EVENTS_DB_PASS: appointment_events
+      APPOINTMENT_EVENTS_DB_BASE: appointment_events
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+
+volumes:
+  appointment_events-db-data:
+    name: appointment_events-db-data
