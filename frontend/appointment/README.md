@@ -1,50 +1,150 @@
-# React + TypeScript + Vite
+Here's a sample `README.md` for the frontend of your application:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+# Appointment Management Frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This is the frontend for the Appointment Management system. It is a React application built with Vite.
 
-## Expanding the ESLint configuration
+## Table of Contents
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Development](#development)
+- [Building for Production](#building-for-production)
+- [Deployment](#deployment)
+- [Environment Variables](#environment-variables)
+- [License](#license)
 
-- Configure the top-level `parserOptions` property like this:
+## Features
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Responsive user interface for managing appointments.
+- Integration with a backend API for CRUD operations.
+- User authentication and role-based access.
+- Calendar view for scheduling and managing appointments.
+
+## Project Structure
+
+```
+├── public               # Static assets
+├── src                  # Source files
+│   ├── assets           # Images, fonts, etc.
+│   ├── components       # Reusable components
+│   ├── pages            # Application pages
+│   ├── services         # API calls and business logic
+│   ├── styles           # Global styles
+│   ├── App.tsx          # Root component
+│   ├── index.tsx        # Entry point
+│   └── ...
+├── .env                 # Environment variables
+├── package.json         # NPM scripts and dependencies
+├── tsconfig.json        # TypeScript configuration
+├── vite.config.ts       # Vite configuration
+└── README.md            # Project documentation
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Installation
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+To set up the frontend locally, follow these steps:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+### Prerequisites
+
+- Node.js (version 16 or higher recommended)
+- NPM or Yarn package manager
+
+### Steps
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone git@github.com:pradhanashwin/appointment_management.git
+   cd appointment_management/frontend/appointment
+   ```
+
+2. **Install dependencies:**
+
+   Using NPM:
+
+   ```bash
+   npm install
+   ```
+
+   Using Yarn:
+
+   ```bash
+   yarn install
+   ```
+
+3. **Set up environment variables:**
+
+   Create a `.env` file in the root directory and add the following variables:
+
+   ```bash
+   VITE_API_URL=http://localhost:8000/api
+   ```
+
+   Replace `http://localhost:8000/api` with your backend API URL.
+
+## Development
+
+To start the development server with hot-reloading:
+
+```bash
+npm run dev
 ```
+
+The application will be available at `http://localhost:5173`.
+
+### Accessing from the Network
+
+To expose the development server on your local network, use the following command:
+
+```bash
+npm run dev -- --host
+```
+
+## Building for Production
+
+To build the application for production, run:
+
+```bash
+npm run build
+```
+
+This will create an optimized build in the `dist` directory.
+
+## Deployment
+
+To deploy the application:
+
+1. **Build the project:**
+
+   ```bash
+   npm run build
+   ```
+
+2. **Serve the built files:**
+
+   You can use a static server like `serve` to serve the files:
+
+   ```bash
+   npm install -g serve
+   serve -s dist
+   ```
+
+3. **Deploy to your production server:**
+
+   Upload the contents of the `dist` directory to your production server and serve it using your preferred method (e.g., Nginx, Apache).
+
+## Environment Variables
+
+The application uses the following environment variables:
+
+- `VITE_API_URL`: The base URL of the backend API.
+
+Make sure to update these variables in the `.env` file or provide them directly in your CI/CD pipeline or hosting environment.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
