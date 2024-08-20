@@ -1,4 +1,4 @@
-// src/components/CustomToolbar.tsx
+// src/components/toolbar.tsx
 import React, { useEffect, useState } from 'react';
 import { ToolbarProps } from 'react-big-calendar';
 
