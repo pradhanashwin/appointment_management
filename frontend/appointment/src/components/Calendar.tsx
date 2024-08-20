@@ -222,7 +222,7 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
             }
         };
     };
-
+    
     return (
         <div className="calendar-container">
             <BigCalendar
@@ -238,7 +238,7 @@ const Calendar: React.FC<ConnectedProps<typeof connector>> = ({ events, fetchEve
                 onSelectSlot={onSelectEventSlotHandler}
                 selectable
             />
-            <h2>Holidays</h2>
+            <h2>Holidays</h2><span style={{fontSize:10}}>**only historical holidays before this year are available</span>
             <ul>
                 {holidays.map((holiday, index) => (
                     <li key={index}>{holiday.name} - {holiday.date}</li>
