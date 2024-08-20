@@ -2,12 +2,6 @@ aiofiles==24.1.0
 alembic==1.13.2
 annotated-types==0.7.0
 anyio==4.4.0
-# Editable install with no version control (appointment==0.1.0)
--e /Users/ashwinpradhan/Documents/interview/levo/backend/appointment
-# Editable install with no version control (appointment_api==0.1.0)
--e /Users/ashwinpradhan/Documents/interview/levo/backend/appointment_api
-# Editable install with no version control (appointment_events==0.1.0)
--e /Users/ashwinpradhan/Documents/interview/levo/backend/appointment_events
 APScheduler==3.10.4
 argon2-cffi==23.1.0
 argon2-cffi-bindings==21.2.0
@@ -42,8 +36,6 @@ docutils==0.20.1
 dulwich==0.21.7
 email_validator==2.2.0
 eradicate==2.3.0
-# Editable install with no version control (event_management==0.1.0)
--e /Users/ashwinpradhan/Documents/interview/levo_react/backend/event_management
 fakeredis==2.23.5
 fastapi==0.111.1
 fastapi-cli==0.0.5
