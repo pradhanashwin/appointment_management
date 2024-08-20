@@ -2,8 +2,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 // Define your API base URL
-const BASE_URL = 'http://localhost:8000/api';
-
+const BASE_URL = `${process.env.VITE_APP_HOST}:8000/api`;
 // Action Types
 export const FETCH_EVENTS = 'fetch_events';
 export const CREATE_EVENT = 'create_event';

@@ -8,7 +8,7 @@ export default ({ mode }) => {
       server: {
         proxy: {
           '/api': {
-            target: 'http://localhost:8000',  // Backend URL
+            target: `${process.env.VITE_APP_HOST}:8000`,  // Backend URL
             changeOrigin: true,
             secure: false,
           },
